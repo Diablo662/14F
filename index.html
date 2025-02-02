@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>¿Quieres ser mi Valentín?</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      color: #333;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      text-align: center;
+
+      /* Fondo con corazones usando la nueva imagen de Imgur */
+      background-image: url('https://i.imgur.com/ycYYLsq.jpg');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      color: #ff4d4d;
+      margin-bottom: 20px;
+      text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Imagen circular más grande */
+    img {
+      width: 400px; /* Tamaño más grande */
+      height: 400px; /* Tamaño más grande */
+      object-fit: cover;
+      border-radius: 50%; /* Forma circular */
+      margin-bottom: 20px;
+      box-shadow: 0 10px 15px rgba(0, 0, 0, 0.3); /* Sombra sutil */
+    }
+
+    .buttons {
+      display: flex;
+      gap: 30px; /* Espacio entre botones */
+    }
+
+    button {
+      padding: 15px 30px;
+      font-size: 1.4rem; /* Botones más grandes */
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s ease-in-out;
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+      transform-origin: center;
+    }
+
+    .yes {
+      background-color: #ff4d4d;
+      color: white;
+      z-index: 2; /* Siempre encima */
+    }
+
+    .no {
+      background-color: #ccc;
+      color: black;
+      z-index: 1; /* Siempre debajo */
+    }
+
+    /* Efectos de hover */
+    button:hover {
+      transform: scale(1.1);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+    }
+
+    button:active {
+      transform: scale(0.95);
+    }
+
+    #gif-message {
+      display: none;
+    }
+
+    #new-title {
+      font-size: 2rem;
+      color: #ff4d4d;
+      margin-top: 20px;
+      text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Añadimos estilo para el texto de prueba que irá arriba del gif */
+    #new-title p {
+      margin-top: 10px;
+      font-size: 1.2rem;
+      color: #ff4d4d;
+    }
+
+    /* Animaciones */
+    #gif-message img {
+      animation: fadeIn 1s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1 id="title">¿Te gustaría ser mi Valentín?</h1>
+  <img id="main-photo" src="https://i.imgur.com/Sg7QHAG.jpg" alt="Foto de los dos">
+
+  <div class="buttons" id="buttons">
+    <button class="yes" id="yes-button">Sí</button>
+    <button class="no" id="no-button">No</button>
+  </div>
+
+  <div id="gif-message">
+    <img src="https://i.imgur.com/xiyUcwr.gif" alt="GIF de celebración" style="width: 300px; height: auto; margin-top: 20px;">
+  </div>
+
+  <!-- Nuevo título con Lorem Ipsum, se mostrará arriba del gif -->
+  <div id="new-title" style="display: none;">
+  <h2>Te quiero mucho Alexandra. 
+    
+    Ya sabia que le darias que si ❤️</h2>
+  <p>Ojala sea el primero de muchos 14 de Febrero.</p>
+</div>
+
+
+  <script>
+    const yesButton = document.getElementById('yes-button');
+    const noButton = document.getElementById('no-button');
+    const mainPhoto = document.getElementById('main-photo');
+    const gifMessage = document.getElementById('gif-message');
+    const title = document.getElementById('title');  // Título original
+    const newTitle = document.getElementById('new-title');  // Nuevo título
+    const buttons = document.getElementById('buttons'); // Contenedor de botones
+
+    const noMessages = [
+      '¿Estás segura?',
+      '¡Piénsalo bien!',
+      'No le tengas miedo al exito🥺',
+      'eh, ya dale que si cabezona 😢'
+    ];
+
+    let noClickCount = 0;
+
+    noButton.addEventListener('click', () => {
+      if (noClickCount < noMessages.length) {
+        noButton.textContent = noMessages[noClickCount];
+        noClickCount++;
+      } else {
+        noButton.textContent = '¡Solo di que sí!';
+      }
+
+      // Incrementamos el tamaño del botón "Sí" y reducimos el tamaño del botón "No"
+      yesButton.style.transform = `scale(${1 + noClickCount * 0.3})`;
+      noButton.style.transform = `scale(${Math.max(1 - noClickCount * 0.1, 0.5)})`;
+      yesButton.style.transition = 'transform 0.3s ease-in-out';
+      noButton.style.transition = 'transform 0.3s ease-in-out';
+    });
+
+    yesButton.addEventListener('click', () => {
+      // Ocultar el título, los botones y la foto cuando se selecciona "Sí"
+      title.style.display = 'none';
+      buttons.style.display = 'none';
+      mainPhoto.style.display = 'none';
+
+      // Mostrar el nuevo título con Lorem Ipsum
+      newTitle.style.display = 'block';
+
+      // Mostrar el gif de celebración
+      gifMessage.style.display = 'block';
+    });
+  </script>
+</body>
+</html>
